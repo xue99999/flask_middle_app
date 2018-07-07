@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_middle_app.config import configs
-from flask_middle_app.models import db, Course
+from flask_middle_app.models import db
 
 
 def create_app(config):
@@ -14,10 +14,11 @@ def create_app(config):
     return app
 
 def register_blueprints(app):
-    from .handlers import front, course, admin
+    from .handlers import front, course, admin, user
     app.register_blueprint(front)
     app.register_blueprint(course)
     app.register_blueprint(admin)
+    app.register_blueprint(user)
 
 # create tables
 def create_data():

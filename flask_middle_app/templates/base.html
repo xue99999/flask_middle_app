@@ -5,6 +5,7 @@
         <title>{% block title %}{% endblock %}</title>
 
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/main.css">
     </head>
     <body>
         
@@ -29,8 +30,8 @@
               </ul>
                 
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">注册</a></li>
-                <li><a href="#">登录</a></li>
+                  <li><a href="{{ url_for('front.register') }}">注册</a></li>
+                  <li><a href="{{ url_for('front.login') }}">登录</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->

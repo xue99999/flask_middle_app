@@ -1,17 +1,7 @@
 from flask import Flask
 from flask_middle_app.config import configs
-from flask_middle_app.models import db
+from flask_middle_app.models import db, User, Course
 
-
-def create_app(config):
-    app = Flask(__name__)
-
-    app.config.from_object(configs.get(config))
-
-    db.init_app(app)
-    register_blueprints(app)
-
-    return app
 
 def register_blueprints(app):
     from .handlers import front, course, admin, user
@@ -19,6 +9,15 @@ def register_blueprints(app):
     app.register_blueprint(course)
     app.register_blueprint(admin)
     app.register_blueprint(user)
+
+def create_app(config):
+    app = Flask(__name__)
+    app.config.from_object(configs.get(config))
+    db.init_app(app)
+    register_blueprints(app)
+
+    return app
+
 
 # create tables
 def create_data():

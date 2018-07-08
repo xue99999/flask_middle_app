@@ -12,6 +12,19 @@ class Base(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+def register_extensions(app):
+    db.init_app(app)
+    Migrate(app, db)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def user_loader(id):
+        return User.query.get(id)
+
+    login_manager.login_view = 'front.login'
+
 
 class User(Base, UserMixin):
     __tablename__ = 'user'

@@ -9,7 +9,7 @@ def register_extensions(app):
     Migrate(app, db)
 
     login_manager = LoginManager()
-    login_manager.init(app)
+    login_manager.init_app(app)
 
     @login_manager.user_loader
     def user_loader(id):
@@ -27,7 +27,7 @@ def register_blueprints(app):
 def create_app(config):
     app = Flask(__name__)
     app.config.from_object(configs.get(config))
-    register_extendsions(app)
+    register_extensions(app)
     register_blueprints(app)
     '''
     db.init_app(app)

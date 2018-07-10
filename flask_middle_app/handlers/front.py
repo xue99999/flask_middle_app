@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash, url_for, redirect
 from flask_middle_app.models import Course, User
 from flask_middle_app.forms import LoginForm, RegisterForm
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 front = Blueprint('front', __name__)
 
@@ -25,6 +25,7 @@ def login():
 @front.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    print(form)
 
     if form.validate_on_submit():
         form.create_user()
@@ -32,3 +33,8 @@ def register():
         return redirect(url_for('.login'))
     return render_template('register.html', form=form)
 
+@front.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('.index'))

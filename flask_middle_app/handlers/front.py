@@ -2,13 +2,19 @@ from flask import Blueprint, render_template, flash, url_for, redirect
 from flask_middle_app.models import Course, User
 from flask_middle_app.forms import LoginForm, RegisterForm
 from flask_login import login_user, logout_user, login_required
+from flask import request, current_app
 
 front = Blueprint('front', __name__)
 
 
 @front.route('/')
 def index():
-    courses = Course.query.all()
+    page = request.args.get('page', default=1, type=int)
+    pagination = Course.query.paginate(
+        page=page,
+        per_page=current_app.config['INDEX_PER_PAGE'],
+        error_our=False
+    )
     return render_template('index.html', courses=courses)
 
 

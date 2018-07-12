@@ -6,7 +6,7 @@
 <h1>ID: {{ user.id }} </h1>
 <h1>Username: {{ user.username }} </h1>
 <h1>Published courses: </h1>
-    {% for course in user.courses %}
+    {% for course in user.publish_courses %}
         <h3>{{ course.name }} - {{ course.author.username }}</h3>
     {% endfor %}
 {% endblock %}

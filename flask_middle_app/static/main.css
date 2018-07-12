@@ -2,7 +2,24 @@ body {
   background: #f5f5f5;
 }
 
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+}
+
 .form {
   width: 400px;
   margin: 0 auto;
+}
+
+.course__name,
+.course__description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.course img {
+  height: 160px !important;
 }

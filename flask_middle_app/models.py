@@ -1,4 +1,5 @@
 from datetime import datetime
+from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -77,8 +78,13 @@ class Course(Base):
     author = db.relationship('User', uselist=False)
     chapters = db.relationship('Chapter')
 
+    @property
+    def url(self):
+        return url_for('course.detail', course_id=self.id)
+
     def __repr__(self):
         return '<Course:{}>'.format(self.name)
+
 
 class Chapter(Base):
     __tablename__ = 'chapter'

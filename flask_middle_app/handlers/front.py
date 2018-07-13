@@ -13,9 +13,9 @@ def index():
     pagination = Course.query.paginate(
         page=page,
         per_page=current_app.config['INDEX_PER_PAGE'],
-        error_our=False
+        error_out=False
     )
-    return render_template('index.html', courses=courses)
+    return render_template('index.html',  pagination=pagination)  
 
 
 @front.route('/login', methods=['GET', 'POST'])

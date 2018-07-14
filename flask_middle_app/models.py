@@ -40,6 +40,7 @@ class User(Base, UserMixin):
 
     _password = db.Column('password', db.String(256), nullable=True)
     job = db.Column(db.String(64))
+    role = db.Column(db.SmallInteger, default=ROLE_USER)
     publish_courses = db.relationship('Course')
 
     def __repr__(self):
@@ -96,6 +97,10 @@ class Chapter(Base):
     video_duration = db.Column(db.String(24))
     course_id = db.Column(db.Integer, db.ForeignKey('course.id', ondelete="CASCADE"))
     course = db.relationship('Course', uselist=False)
+
+    @property
+    def url(self):
+        return url_for('course.chapter', course_id=self.course.id, chapter_id=self.id)
 
     def __repr__(self):
         return '<Chapter:{}>'.format(self.name)

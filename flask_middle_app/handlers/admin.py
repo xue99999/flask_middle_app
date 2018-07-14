@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, request, current_app, redirect, url_for, flash
 from flask_middle_app.decorators import admin_required
 from flask_middle_app.models import Course
-from flask_middle_app.forms import CourseForm
+from flask_middle_app.forms import CourseForm, db
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -34,3 +35,26 @@ def create_course():
         flash('课程创建成功', 'success')
         return redirect(url_for('admin.courses'))
     return render_template('admin/create_course.html', form=form)
+
+
+@admin.route('/courses/<int:course_id>/edit', methods=['GET', 'POST'])
+@admin_required
+def edit_course(course_id):
+    course = Course.query.get_or_404(course_id)
+    form = CourseForm(obj=course)
+
+    if form.validate_on_submit():
+        form.update_course(course)
+        flash('课程更新成功', 'success')
+        return redirect(url_for('admin.courses'))
+    return render_template('admin/edit_course.html', form=form, course=course)
+
+
+@admin.route('/courses/<int:course_id>/delete')
+@admin_required
+def delete_course(course_id):
+    course = Course.query.get_or_404(course_id)
+    db.session.delete(course)
+    db.session.commit()
+    flash('课程删除成功', 'success')
+    return redirect(url_for('admin.courses'))

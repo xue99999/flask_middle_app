@@ -1,9 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import Length, Email, EqualTo, Required, Regexp
-from flask_middle_app.models import db, User
+from flask_middle_app.models import db, User, Course, Live
 from wtforms import ValidationError, TextAreaField, IntegerField
-from flask_middle_app.models import Course
 from wtforms.validators import URL, NumberRange
 
 class RegisterForm(FlaskForm):
@@ -75,3 +74,14 @@ class CourseForm(FlaskForm):
         db.session.add(course)
         db.session.commit()
         return course
+
+class LiveForm(FlaskForm):
+    name = StringField('Live名字', validators=[Required(), Length(5, 32)])
+    submit = SubmitField('提交')
+
+    def create_live(self):
+        live = Live()
+        self.populate_obj(live)
+        db.session.add(live)
+        db.session.commit()
+        return live

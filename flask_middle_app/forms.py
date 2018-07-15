@@ -69,7 +69,7 @@ class CourseForm(FlaskForm):
         return course
 
     def update_course(self, course):
-        self.populate(course)
+        self.populate_obj(course)
         db.session.add(course)
         db.session.commit()
         return course

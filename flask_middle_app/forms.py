@@ -32,6 +32,8 @@ class RegisterForm(FlaskForm):
         db.session.commit()
         return user
 
+
+
 class LoginForm(FlaskForm):
     username = StringField('用户名', validators=[Required(), Length(3, 24)])
     password = PasswordField('密码', validators=[Required(), Length(6, 24)])
